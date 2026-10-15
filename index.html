@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UASA English Year 5 - Unit 4: Sport</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        sport: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            400: '#38bdf8',
+                            500: '#0284c7',
+                            600: '#0369a1',
+                            700: '#075985',
+                        }
+                    },
+                    fontFamily: {
+                        fredoka: ['Fredoka', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Fredoka', cursive, sans-serif;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .bounce-btn {
+            transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.15s ease;
+        }
+        .bounce-btn:active {
+            transform: scale(0.92);
+        }
+        .bounce-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+        }
+
+        .star-glow {
+            filter: drop-shadow(0 0 8px #f59e0b);
+        }
+
+        .card-pop {
+            animation: pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes pop {
+            0% { transform: scale(0.85); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .float-anim {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.05);
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #0284c7;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 flex flex-col justify-between transition-colors duration-300">
+
+    <header class="sticky top-0 z-40 w-full bg-white/90 dark:bg-slate-800/90 backdrop-blur-md border-b-4 border-sky-400 dark:border-sky-600 px-4 py-3 shadow-md">
+        <div class="max-w-5xl mx-auto flex justify-between items-center">
+            <!-- Logo / Home Button -->
+            <div onclick="showSection('dashboard')" class="flex items-center gap-3 cursor-pointer group">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-sky-500 to-blue-600 flex items-center justify-center text-2xl shadow-lg border-2 border-white group-hover:rotate-6 transition-transform text-white">
+                    ⚽
+                </div>
+                <div>
+                    <h1 class="font-extrabold text-base sm:text-xl text-sky-700 dark:text-sky-400 leading-none">UASA Sports Special</h1>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 font-bold">Year 5 • Unit 4: Sport</p>
+                </div>
+            </div>
+
+            <!-- Score & Utilities -->
+            <div class="flex items-center gap-2 sm:gap-3">
+                <div class="bg-amber-100 dark:bg-amber-950/80 border-2 border-amber-400 text-amber-800 dark:text-amber-300 px-3.5 py-1.5 rounded-2xl font-black text-sm flex items-center gap-2 shadow-inner">
+                    <i class="fa-solid fa-star text-amber-500 text-lg star-glow float-anim"></i>
+                    <span id="star-count">0</span>
+                </div>
+
+                <button onclick="toggleAudio()" id="audio-toggle-btn" class="w-10 h-10 rounded-2xl bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 text-slate-700 dark:text-slate-200 border-2 border-slate-300 flex items-center justify-center text-base bounce-btn shadow" title="Toggle Sound">
+                    <i id="audio-icon" class="fa-solid fa-volume-high"></i>
+                </button>
+
+                <button onclick="toggleDarkMode()" class="w-10 h-10 rounded-2xl bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 text-slate-700 dark:text-slate-200 border-2 border-slate-300 flex items-center justify-center text-base bounce-btn shadow" title="Toggle Dark/Light Mode">
+                    <i id="theme-icon" class="fa-solid fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-5xl w-full mx-auto p-4 sm:p-6 flex-grow">
+
+        <!-- ================= DASHBOARD SECTION ================= -->
+        <section id="sec-dashboard" class="space-y-6">
+            <div class="bg-gradient-to-r from-sky-500 via-blue-600 to-indigo-600 rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden border-4 border-sky-200">
+                <div class="max-w-2xl relative z-10 space-y-3">
+                    <span class="bg-white/30 text-white font-extrabold text-xs uppercase px-3.5 py-1.5 rounded-full backdrop-blur-sm">Year 5 • English Plus 1 (Unit 4)</span>
+                    <h2 class="text-3xl sm:text-5xl font-black drop-shadow-md">Master Unit 4: Sport! 🏆</h2>
+                    <p class="text-sky-100 text-sm sm:text-base font-semibold leading-relaxed">
+                        This special module features **Learning Notes (Grammar & Vocabulary)**, **UASA Sentence Building**, and **20 UASA Objective Questions** for Year 5 Sport topic.
+                    </p>
+                </div>
+                <div class="absolute -right-4 -bottom-8 text-9xl opacity-20 select-none">
+                    🏅
+                </div>
+            </div>
+
+            <!-- Dashboard Selection Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Module 1: Learning Notes -->
+                <div onclick="showSection('notes')" class="bg-white dark:bg-slate-800 border-4 border-amber-300 dark:border-amber-600 rounded-3xl p-6 text-center shadow-xl cursor-pointer bounce-btn space-y-4 flex flex-col justify-between">
+                    <div class="space-y-3">
+                        <div class="w-20 h-20 mx-auto rounded-3xl bg-amber-100 dark:bg-amber-900/60 flex items-center justify-center text-5xl">
+                            📚
+                        </div>
+                        <h3 class="text-xl font-black text-slate-900 dark:text-white">Learning Notes</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 font-bold leading-relaxed">
+                            Learn sports vocabulary and key grammar rules (Play/Do/Go, Good at, Can/Can't) with audio pronunciations.
+                        </p>
+                    </div>
+                    <button class="w-full bg-amber-500 hover:bg-amber-600 text-white font-black py-3 rounded-2xl shadow-md border-b-4 border-amber-700">
+                        Open Notes! 📖
+                    </button>
+                </div>
+
+                <!-- Module 2: Sentence Builder (Part 5) -->
+                <div onclick="startBuilder()" class="bg-white dark:bg-slate-800 border-4 border-emerald-300 dark:border-emerald-600 rounded-3xl p-6 text-center shadow-xl cursor-pointer bounce-btn space-y-4 flex flex-col justify-between">
+                    <div class="space-y-3">
+                        <div class="w-20 h-20 mx-auto rounded-3xl bg-emerald-100 dark:bg-emerald-900/60 flex items-center justify-center text-5xl">
+                            🧩
+                        </div>
+                        <h3 class="text-xl font-black text-slate-900 dark:text-white">UASA Part 5: Builder</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 font-bold leading-relaxed">
+                            Build sports sentences by arranging jumbled words according to correct English grammar rules.
+                        </p>
+                    </div>
+                    <button class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-black py-3 rounded-2xl shadow-md border-b-4 border-emerald-700">
+                        Build Sentences! 🛠️
+                    </button>
+                </div>
+
+                <!-- Module 3: 20 UASA Questions -->
+                <div onclick="startQuiz()" class="bg-white dark:bg-slate-800 border-4 border-sky-300 dark:border-sky-600 rounded-3xl p-6 text-center shadow-xl cursor-pointer bounce-btn space-y-4 flex flex-col justify-between">
+                    <div class="space-y-3">
+                        <div class="w-20 h-20 mx-auto rounded-3xl bg-sky-100 dark:bg-sky-900/60 flex items-center justify-center text-5xl">
+                            📝
+                        </div>
+                        <h3 class="text-xl font-black text-slate-900 dark:text-white">20 UASA Questions</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 font-bold leading-relaxed">
+                            Full 20-question test formatted for UASA Parts 1 & 2 with instant answer checking and audio support.
+                        </p>
+                    </div>
+                    <button class="w-full bg-sky-500 hover:bg-sky-600 text-white font-black py-3 rounded-2xl shadow-md border-b-4 border-sky-700">
+                        Start Quiz (20 Questions)! 🎯
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= NOTES SECTION ================= -->
+        <section id="sec-notes" class="space-y-6 hidden">
+            <div class="flex items-center justify-between">
+                <button onclick="showSection('dashboard')" class="bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-100 font-extrabold px-4 py-2 rounded-2xl text-sm flex items-center gap-2 bounce-btn">
+                    <i class="fa-solid fa-arrow-left"></i> Back to Home
+                </button>
+                <span class="text-sm font-black text-amber-600 dark:text-amber-400">Learning Notes: Unit 4 Sport</span>
+            </div>
+
+            <!-- Notes Tab Navigation -->
+            <div class="flex overflow-x-auto gap-2 pb-2 custom-scrollbar border-b-2 border-slate-200 dark:border-slate-700">
+                <button onclick="switchNotesTab('tab-vocab')" id="btn-tab-vocab" class="notes-tab-btn bg-amber-500 text-white font-extrabold px-4 py-2.5 rounded-2xl text-xs sm:text-sm whitespace-nowrap bounce-btn shadow">
+                    🏀 Sports Vocabulary
+                </button>
+                <button onclick="switchNotesTab('tab-verbs')" id="btn-tab-verbs" class="notes-tab-btn bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-extrabold px-4 py-2.5 rounded-2xl text-xs sm:text-sm whitespace-nowrap bounce-btn">
+                    ⚽ Play vs Do vs Go
+                </button>
+                <button onclick="switchNotesTab('tab-ability')" id="btn-tab-ability" class="notes-tab-btn bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-extrabold px-4 py-2.5 rounded-2xl text-xs sm:text-sm whitespace-nowrap bounce-btn">
+                    🥇 Good At / Can / Can't
+                </button>
+            </div>
+
+            <!-- Tab 1: Vocabulary Flashcards & List -->
+            <div id="notes-tab-vocab" class="notes-content space-y-6">
+                <div class="bg-white dark:bg-slate-800 border-4 border-amber-300 dark:border-amber-600 rounded-3xl p-6 shadow-xl space-y-4">
+                    <h3 class="text-xl font-black text-slate-900 dark:text-white flex items-center gap-2">
+                        <span>🏆</span> Sports Vocabulary
+                    </h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 font-semibold">
+                        Click the <i class="fa-solid fa-volume-high text-amber-500"></i> button on any word to hear the audio pronunciation.
+                    </p>
+
+                    <div id="vocab-cards-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 pt-2">
+                        <!-- Dynamic Vocab Cards -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 2: Grammar Rule - Play, Do, Go -->
+            <div id="notes-tab-verbs" class="notes-content space-y-6 hidden">
+                <div class="bg-white dark:bg-slate-800 border-4 border-sky-300 dark:border-sky-600 rounded-3xl p-6 shadow-xl space-y-6">
+                    <div>
+                        <h3 class="text-xl font-black text-slate-900 dark:text-white flex items-center gap-2">
+                            <span>⚡</span> Grammar 1: Using 'PLAY', 'DO', and 'GO'
+                        </h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 font-semibold mt-1">
+                            In English, sports verbs are categorized into 3 main groups:
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <!-- Play Card -->
+                        <div class="bg-sky-50 dark:bg-slate-900 border-3 border-sky-300 dark:border-sky-700 rounded-2xl p-4 space-y-2">
+                            <div class="flex items-center gap-2">
+                                <span class="text-2xl">⚽</span>
+                                <h4 class="text-lg font-black text-sky-700 dark:text-sky-400">PLAY</h4>
+                            </div>
+                            <p class="text-xs text-slate-600 dark:text-slate-300 font-bold">
+                                For team sports or competitive games with a **BALL / EQUIPMENT**:
+                            </p>
+                            <ul class="text-xs text-slate-700 dark:text-slate-300 font-semibold space-y-1 bg-white dark:bg-slate-800 p-2.5 rounded-xl border border-sky-200 dark:border-sky-800">
+                                <li>• Play football ⚽</li>
+                                <li>• Play basketball 🏀</li>
+                                <li>• Play tennis 🎾</li>
+                                <li>• Play badminton 🏸</li>
+                            </ul>
+                        </div>
+
+                        <!-- Do Card -->
+                        <div class="bg-purple-50 dark:bg-slate-900 border-3 border-purple-300 dark:border-purple-700 rounded-2xl p-4 space-y-2">
+                            <div class="flex items-center gap-2">
+                                <span class="text-2xl">🥋</span>
+                                <h4 class="text-lg font-black text-purple-700 dark:text-purple-400">DO</h4>
+                            </div>
+                            <p class="text-xs text-slate-600 dark:text-slate-300 font-bold">
+                                For **INDIVIDUAL EXERCISES** or **MARTIAL ARTS** (no ball):
+                            </p>
+                            <ul class="text-xs text-slate-700 dark:text-slate-300 font-semibold space-y-1 bg-white dark:bg-slate-800 p-2.5 rounded-xl border border-purple-200 dark:border-purple-800">
+                                <li>• Do gymnastics 🤸</li>
+                                <li>• Do taekwondo 🥋</li>
+                                <li>• Do athletics 🏃</li>
+                                <li>• Do karate 🥋</li>
+                            </ul>
+                        </div>
+
+                        <!-- Go Card -->
+                        <div class="bg-emerald-50 dark:bg-slate-900 border-3 border-emerald-300 dark:border-emerald-700 rounded-2xl p-4 space-y-2">
+                            <div class="flex items-center gap-2">
+                                <span class="text-2xl">🏊</span>
+                                <h4 class="text-lg font-black text-emerald-700 dark:text-emerald-400">GO</h4>
+                            </div>
+                            <p class="text-xs text-slate-600 dark:text-slate-300 font-bold">
+                                For sports activities that end with **'-ING'**:
+                            </p>
+                            <ul class="text-xs text-slate-700 dark:text-slate-300 font-semibold space-y-1 bg-white dark:bg-slate-800 p-2.5 rounded-xl border border-emerald-200 dark:border-emerald-800">
+                                <li>• Go swimming 🏊</li>
+                                <li>• Go cycling 🚴</li>
+                                <li>• Go skiing 🎿</li>
+                                <li>• Go snowboarding 🏂</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 3: Grammar Rule - Good At & Ability -->
+            <div id="notes-tab-ability" class="notes-content space-y-6 hidden">
+                <div class="bg-white dark:bg-slate-800 border-4 border-indigo-300 dark:border-indigo-600 rounded-3xl p-6 shadow-xl space-y-6">
+                    <div>
+                        <h3 class="text-xl font-black text-slate-900 dark:text-white flex items-center gap-2">
+                            <span>🎯</span> Grammar 2: Expressing Ability & Skill
+                        </h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 font-semibold mt-1">
+                            Essential grammar rules commonly tested in UASA examinations:
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Formula 1: Good at / Bad at -->
+                        <div class="bg-indigo-50 dark:bg-slate-900 border-3 border-indigo-300 dark:border-indigo-700 rounded-2xl p-5 space-y-3">
+                            <h4 class="text-base font-black text-indigo-700 dark:text-indigo-400">
+                                1. Good at / Bad at + Verb (-ing)
+                            </h4>
+                            <p class="text-xs text-slate-600 dark:text-slate-300 font-semibold">
+                                Always use Verb + **-ing** after the phrase *good at* or *bad at*.
+                            </p>
+                            <div class="bg-white dark:bg-slate-800 p-3 rounded-xl space-y-1.5 text-xs font-extrabold border border-indigo-200">
+                                <p class="text-emerald-600 dark:text-emerald-400">✅ I am good at <u>swimming</u>.</p>
+                                <p class="text-rose-500">❌ I am good at swim. (Incorrect)</p>
+                                <p class="text-emerald-600 dark:text-emerald-400">✅ He is bad at <u>running</u>.</p>
+                            </div>
+                        </div>
+
+                        <!-- Formula 2: Can / Can't -->
+                        <div class="bg-amber-50 dark:bg-slate-900 border-3 border-amber-300 dark:border-amber-700 rounded-2xl p-5 space-y-3">
+                            <h4 class="text-base font-black text-amber-800 dark:text-amber-400">
+                                2. Can / Can't + Base Verb
+                            </h4>
+                            <p class="text-xs text-slate-600 dark:text-slate-300 font-semibold">
+                                Use the Base Verb (original form without '-ing' or '-s') after *can* or *can't*.
+                            </p>
+                            <div class="bg-white dark:bg-slate-800 p-3 rounded-xl space-y-1.5 text-xs font-extrabold border border-amber-200">
+                                <p class="text-emerald-600 dark:text-emerald-400">✅ She can <u>kick</u> the ball high.</p>
+                                <p class="text-rose-500">❌ She can kicking the ball. (Incorrect)</p>
+                                <p class="text-emerald-600 dark:text-emerald-400">✅ They can't <u>swim</u> fast.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SENTENCE BUILDER SECTION ================= -->
+        <section id="sec-builder" class="space-y-6 hidden">
+            <div class="flex items-center justify-between">
+                <button onclick="showSection('dashboard')" class="bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-100 font-extrabold px-4 py-2 rounded-2xl text-sm flex items-center gap-2 bounce-btn">
+                    <i class="fa-solid fa-arrow-left"></i> Back to Home
+                </button>
+                <span class="text-sm font-black text-emerald-600 dark:text-emerald-400">UASA Part 5: Sentence Builder</span>
+            </div>
+
+            <div class="bg-white dark:bg-slate-800 border-4 border-emerald-300 dark:border-emerald-600 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
+                <div class="text-center space-y-1">
+                    <span class="bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 font-black text-xs px-3 py-1 rounded-full uppercase">Arrange Sports Words</span>
+                    <h3 id="builder-task-title" class="text-2xl font-black text-slate-900 dark:text-white">
+                        Build the Sports Sentence!
+                    </h3>
+                    <p id="builder-task-sub" class="text-xs text-slate-500 font-semibold">
+                        Tap the words below in the correct order.
+                    </p>
+                </div>
+
+                <!-- Dropzone Area -->
+                <div id="builder-dropzone" class="min-h-[90px] bg-emerald-50 dark:bg-slate-900 border-3 border-dashed border-emerald-300 dark:border-emerald-700 rounded-2xl p-4 flex flex-wrap items-center justify-center gap-2.5 transition">
+                    <span class="text-xs text-emerald-400 font-bold select-none">Tap words below to place them here...</span>
+                </div>
+
+                <!-- Choice Blocks -->
+                <div id="builder-choices" class="flex flex-wrap items-center justify-center gap-2.5 pt-2">
+                    <!-- Dynamic Word Blocks -->
+                </div>
+
+                <div class="flex items-center justify-center gap-4 pt-4 border-t border-slate-200 dark:border-slate-700">
+                    <button onclick="checkBuilderAnswer()" class="bg-emerald-500 hover:bg-emerald-600 text-white font-black px-8 py-3.5 rounded-2xl text-base shadow-lg border-b-4 border-emerald-700 bounce-btn">
+                        Check Answer! ✅
+                    </button>
+                    <button onclick="resetBuilderZone()" class="bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 text-slate-700 dark:text-slate-200 font-extrabold px-5 py-3.5 rounded-2xl text-sm bounce-btn">
+                        Reset 🔄
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= QUIZ SECTION ================= -->
+        <section id="sec-quiz" class="space-y-6 hidden">
+            <div class="flex items-center justify-between">
+                <button onclick="showSection('dashboard')" class="bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-100 font-extrabold px-4 py-2 rounded-2xl text-sm flex items-center gap-2 bounce-btn">
+                    <i class="fa-solid fa-arrow-left"></i> Back to Home
+                </button>
+                <div class="flex items-center gap-2">
+                    <span class="text-sm font-black text-sky-600 dark:text-sky-400">20 UASA Sports Quiz</span>
+                </div>
+            </div>
+
+            <div class="bg-white dark:bg-slate-800 border-4 border-sky-300 dark:border-sky-600 rounded-3xl p-6 sm:p-8 shadow-2xl max-w-2xl mx-auto space-y-6 card-pop">
+                
+                <!-- Quiz Progress Bar & Header -->
+                <div class="space-y-2">
+                    <div class="flex justify-between items-center text-xs font-black text-slate-500 dark:text-slate-400">
+                        <span id="quiz-progress-lbl">Question 1 of 20</span>
+                        <span id="quiz-score-lbl" class="text-sky-600 dark:text-sky-400">Score: 0 / 200</span>
+                    </div>
+                    <div class="w-full bg-slate-100 dark:bg-slate-700 h-3 rounded-full overflow-hidden">
+                        <div id="quiz-progress-bar" class="bg-sky-500 h-full w-1/20 transition-all duration-300"></div>
+                    </div>
+                </div>
+
+                <!-- Question Prompt Container -->
+                <div class="space-y-4 py-2 text-center">
+                    <p id="quiz-question-text" class="text-lg sm:text-xl font-black text-slate-800 dark:text-white leading-relaxed">
+                        <!-- Dynamic Question Text -->
+                    </p>
+
+                    <button onclick="playQuizSoundPrompt()" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-sky-500 hover:bg-sky-600 text-white font-extrabold text-xs shadow-md bounce-btn border-b-4 border-sky-800">
+                        <i class="fa-solid fa-volume-high text-sm"></i> Listen to Question
+                    </button>
+                </div>
+
+                <!-- Multiple Choice Options -->
+                <div id="quiz-options-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-2">
+                    <!-- Dynamic Option Buttons -->
+                </div>
+
+                <!-- Feedback Banner -->
+                <div id="quiz-feedback-box" class="hidden p-4 rounded-2xl text-center font-black text-sm border-2"></div>
+            </div>
+        </section>
+
+        <!-- ================= REWARD MODAL ================= -->
+        <div id="reward-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50 hidden">
+            <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 sm:p-8 max-w-md w-full text-center shadow-2xl border-4 border-amber-400 space-y-5 card-pop">
+                <div class="text-7xl float-anim">🏆</div>
+                <div class="space-y-1">
+                    <h3 id="modal-title" class="text-3xl font-black text-slate-900 dark:text-white">Congratulations!</h3>
+                    <p id="modal-subtitle" class="text-xs text-slate-500 font-bold">You completed the Year 5 sports practice module!</p>
+                </div>
+                <div id="modal-stars" class="flex justify-center gap-2 text-4xl text-amber-400">
+                    <i class="fa-solid fa-star star-glow"></i>
+                    <i class="fa-solid fa-star star-glow"></i>
+                    <i class="fa-solid fa-star star-glow"></i>
+                </div>
+                <button onclick="closeRewardModal()" class="w-full bg-amber-500 hover:bg-amber-600 text-white font-black py-3.5 rounded-2xl text-base shadow-lg border-b-4 border-amber-700 bounce-btn">
+                    Continue! 🚀
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="py-4 text-center text-xs font-bold text-slate-400 border-t border-slate-200 dark:border-slate-800">
+        UASA English Year 5 • Unit 4: Sport Interactive Learning Module
+    </footer>
+
+    <!-- ================= JAVASCRIPT LOGIC & DATA ================= -->
+    <script>
+        const SPORTS_DATA = {
+            vocabList: [
+                { emoji: '⚽', word: 'Football', meaning: 'Team ball sport played with feet', sentence: 'They play football at the stadium.' },
+                { emoji: '🏀', word: 'Basketball', meaning: 'Game of shooting ball into a hoop', sentence: 'You need to throw the ball into the hoop.' },
+                { emoji: '🎾', word: 'Tennis', meaning: 'Racket sport played over a net', sentence: 'She hits the ball with a yellow racket.' },
+                { emoji: '🏊', word: 'Swimming', meaning: 'Water activity in a pool or sea', sentence: 'We go swimming in the pool every Sunday.' },
+                { emoji: '🚴', word: 'Cycling', meaning: 'Riding a bicycle for fitness', sentence: 'Cycling is great exercise for your legs.' },
+                { emoji: '🤸', word: 'Gymnastics', meaning: 'Physical exercises showing agility', sentence: 'She does gymnastics at the sports centre.' },
+                { emoji: '🥋', word: 'Taekwondo', meaning: 'Korean martial art sport', sentence: 'He got a black belt in taekwondo.' },
+                { emoji: '🎿', word: 'Skiing', meaning: 'Gliding on snow using long skis', sentence: 'People go skiing on snowy mountains.' },
+                { emoji: '🏃', word: 'Athletics', meaning: 'Track and field sports events', sentence: 'Athletics includes running, jumping, and throwing.' },
+                { emoji: '🏆', word: 'Trophy', meaning: 'Prize awarded to a champion', sentence: 'The winner receives a gold trophy.' },
+                { emoji: '👨‍⚖️', word: 'Referee', meaning: 'Match official enforcing rules', sentence: 'The referee blew his whistle.' },
+                { emoji: '🏟️', word: 'Stadium', meaning: 'Large venue for sports matches', sentence: 'Thousands of fans gathered at the stadium.' }
+            ],
+
+            builderTasks: [
+                {
+                    title: 'Task 1: Sports Preference',
+                    sub: 'Arrange the words to make a sentence.',
+                    correct: ['My', 'brother', 'is', 'really', 'good', 'at', 'playing', 'football.'],
+                    shuffled: ['good', 'playing', 'brother', 'My', 'at', 'is', 'football.', 'really']
+                },
+                {
+                    title: 'Task 2: Sports Verb',
+                    sub: 'Arrange the words to make a sentence.',
+                    correct: ['She', 'goes', 'swimming', 'in', 'the', 'pool', 'every', 'Saturday.'],
+                    shuffled: ['swimming', 'She', 'pool', 'Saturday.', 'goes', 'every', 'in', 'the']
+                },
+                {
+                    title: 'Task 3: Ability Expression',
+                    sub: 'Arrange the words to make a sentence.',
+                    correct: ['He', 'can', 'kick', 'the', 'ball', 'very', 'far.'],
+                    shuffled: ['kick', 'far.', 'ball', 'can', 'He', 'the', 'very']
+                },
+                {
+                    title: 'Task 4: Gymnastics Verb',
+                    sub: 'Arrange the words to make a sentence.',
+                    correct: ['They', 'do', 'gymnastics', 'at', 'the', 'sports', 'centre.'],
+                    shuffled: ['do', 'the', 'sports', 'They', 'gymnastics', 'centre.', 'at']
+                },
+                {
+                    title: 'Task 5: Tournament Past Tense',
+                    sub: 'Arrange the words to make a sentence.',
+                    correct: ['Lee', 'Zii', 'Jia', 'won', 'the', 'badminton', 'match', 'yesterday.'],
+                    shuffled: ['match', 'badminton', 'won', 'yesterday.', 'Jia', 'Lee', 'the', 'Zii']
+                }
+            ],
+
+            quiz20Questions: [
+                {
+                    questionText: "1. We ___ football at the local field every evening.",
+                    audioPrompt: "We blank football at the local field every evening.",
+                    options: [
+                        { text: "play", emoji: "⚽" },
+                        { text: "do", emoji: "🥋" },
+                        { text: "go", emoji: "🏊" },
+                        { text: "playing", emoji: "🏃" }
+                    ],
+                    correctIndex: 0
+                },
+                {
+                    questionText: "2. My sister goes ___ in the public pool every weekend.",
+                    audioPrompt: "My sister goes blank in the public pool every weekend.",
+                    options: [
+                        { text: "swim", emoji: "🏊" },
+                        { text: "swimming", emoji: "🏊" },
+                        { text: "swam", emoji: "🏊" },
+                        { text: "swimmer", emoji: "🏊" }
+                    ],
+                    correctIndex: 1
+                },
+                {
+                    questionText: "3. My friend is very flexible because he does ___.",
+                    audioPrompt: "My friend is very flexible because he does blank.",
+                    options: [
+                        { text: "basketball", emoji: "🏀" },
+                        { text: "gymnastics", emoji: "🤸" },
+                        { text: "cycling", emoji: "🚴" },
+                        { text: "skiing", emoji: "🎿" }
+                    ],
+                    correctIndex: 1
+                },
+                {
+                    questionText: "4. A large venue where sports matches are played is a ___.",
+                    audioPrompt: "A large venue where sports matches are played is a blank.",
+                    options: [
+                        { text: "library", emoji: "📚" },
+                        { text: "stadium", emoji: "🏟️" },
+                        { text: "bakery", emoji: "🍞" },
+                        { text: "hospital", emoji: "🏥" }
+                    ],
+                    correctIndex: 1
+                },
+                {
+                    questionText: "5. The person who controls a football match and enforces rules is a ___.",
+                    audioPrompt: "The person who controls a football match and enforces rules is a blank.",
+                    options: [
+                        { text: "referee", emoji: "👨‍⚖️" },
+                        { text: "chef", emoji: "👨‍🍳" },
+                        { text: "doctor", emoji: "👨‍⚕️" },
+                        { text: "pilot", emoji: "🧑‍✈️" }
+                    ],
+                    correctIndex: 0
+                },
+                {
+                    questionText: "6. She practices every day. She is really good ___ running fast.",
+                    audioPrompt: "She practices every day. She is really good blank running fast.",
+                    options: [
+                        { text: "at", emoji: "🎯" },
+                        { text: "on", emoji: "📍" },
+                        { text: "in", emoji: "📥" },
+                        { text: "for", emoji: "🎁" }
+                    ],
+                    correctIndex: 0
+                },
+                {
+                    questionText: "7. Which sport is played on ice while wearing skates?",
+                    audioPrompt: "Which sport is played on ice while wearing skates?",
+                    options: [
+                        { text: "Ice hockey", emoji: "🏒" },
+                        { text: "Volleyball", emoji: "🏐" },
+                        { text: "Badminton", emoji: "🏸" },
+                        { text: "Football", emoji: "⚽" }
+                    ],
+                    correctIndex: 0
+                },
+                {
+                    questionText: "8. The champion lifted the golden ___ at the end of the tournament.",
+                    audioPrompt: "The champion lifted the golden blank at the end of the tournament.",
+                    options: [
+                        { text: "trophy", emoji: "🏆" },
+                        { text: "book", emoji: "📖" },
+                        { text: "pencil", emoji: "✏️" },
+                        { text: "desk", emoji: "🪑" }
+                    ],
+                    correctIndex: 0
+                },
+                {
+                    questionText: "9. Yesterday, Lee Zii Jia ___ the badminton final match.",
+                    audioPrompt: "Yesterday, Lee Zii Jia blank the badminton final match.",
+                    options: [
+                        { text: "win", emoji: "🥇" },
+                        { text: "won", emoji: "🏆" },
+                        { text: "winning", emoji: "🏃" },
+                        { text: "wins", emoji: "✨" }
+                    ],
+                    correctIndex: 1
+                },
+                {
+                    questionText: "10. You need a racket and a shuttlecock to play ___.",
+                    audioPrompt: "You need a racket and a shuttlecock to play blank.",
+                    options: [
+                        { text: "rugby", emoji: "🏉" },
+                        { text: "badminton", emoji: "🏸" },
+                        { text: "basketball", emoji: "🏀" },
+                        { text: "bowling", emoji: "🎳" }
+                    ],
+                    correctIndex: 1
+                },
+                {
+                    questionText: "11. He isn't fast, so he is bad ___ athletics.",
+                    audioPrompt: "He isn't fast, so he is bad blank athletics.",
+                    options: [
+                        { text: "at", emoji: "🎯" },
+                        { text: "with", emoji: "🤝" },
+                        { text: "to", emoji: "➡️" },
+                        { text: "by", emoji: "🚶" }
+                    ],
+                    correctIndex: 0
+                },
+                {
+                    questionText: "12. Look! The runner is speeding down the running ___.",
+                    audioPrompt: "Look! The runner is speeding down the running blank.",
+                    options: [
+                        { text: "track", emoji: "🏃" },
+                        { text: "desk", emoji: "🪑" },
+                        { text: "wall", emoji: "🧱" },
+                        { text: "shelf", emoji: "📦" }
+                    ],
+                    correctIndex: 0
+                },
+                {
+                    questionText: "13. Before playing basketball, you must put on proper sports ___.",
+                    audioPrompt: "Before playing basketball, you must put on proper sports blank.",
+                    options: [
+                        { text: "shoes", emoji: "👟" },
+                        { text: "gloves", emoji: "🧤" },
+                        { text: "scarf", emoji: "🧣" },
+                        { text: "slippers", emoji: "🩴" }
+                    ],
+                    correctIndex: 0
+                },
+                {
+                    questionText: "14. A race that combines swimming, cycling, and running is a ___.",
+                    audioPrompt: "A race that combines swimming, cycling, and running is a blank.",
+                    options: [
+                        { text: "triathlon", emoji: "🥇" },
+                        { text: "chess game", emoji: "♟️" },
+                        { text: "singing contest", emoji: "🎤" },
+                        { text: "dance competition", emoji: "💃" }
+                    ],
+                    correctIndex: 0
+                },
+                {
+                    questionText: "15. Notice: 'Please do not step on the grass pitch.' Where do you see this?",
+                    audioPrompt: "Where do you see the notice: Please do not step on the grass pitch?",
+                    options: [
+                        { text: "At a sports stadium", emoji: "🏟️" },
+                        { text: "In a library", emoji: "📚" },
+                        { text: "In a cinema", emoji: "🍿" },
+                        { text: "Inside an airplane", emoji: "✈️" }
+                    ],
+                    correctIndex: 0
+                },
+                {
+                    questionText: "16. During snowy winter holidays, many tourists go ___.",
+                    audioPrompt: "During snowy winter holidays, many tourists go blank.",
+                    options: [
+                        { text: "skiing", emoji: "🎿" },
+                        { text: "play football", emoji: "⚽" },
+                        { text: "do taekwondo", emoji: "🥋" },
+                        { text: "playing tennis", emoji: "🎾" }
+                    ],
+                    correctIndex: 0
+                },
+                {
+                    questionText: "17. The football goalkeeper caught the ball with his ___.",
+                    audioPrompt: "The football goalkeeper caught the ball with his blank.",
+                    options: [
+                        { text: "hands", emoji: "🧤" },
+                        { text: "head", emoji: "🗣️" },
+                        { text: "knees", emoji: "🦵" },
+                        { text: "elbows", emoji: "💪" }
+                    ],
+                    correctIndex: 0
+                },
+                {
+                    questionText: "18. A person who trains hard and competes in sports is an ___.",
+                    audioPrompt: "A person who trains hard and competes in sports is an blank.",
+                    options: [
+                        { text: "athlete", emoji: "🏅" },
+                        { text: "author", emoji: "✍️" },
+                        { text: "actor", emoji: "🎭" },
+                        { text: "artist", emoji: "🎨" }
+                    ],
+                    correctIndex: 0
+                },
+                {
+                    questionText: "19. Dialogue: 'How often do you go cycling?' '___.'",
+                    audioPrompt: "How often do you go cycling?",
+                    options: [
+                        { text: "I go cycling twice a week.", emoji: "🚴" },
+                        { text: "Yes, I like cycling.", emoji: "👍" },
+                        { text: "In the bedroom.", emoji: "🛏️" },
+                        { text: "It is red.", emoji: "🔴" }
+                    ],
+                    correctIndex: 0
+                },
+                {
+                    questionText: "20. Choose the sentence with CORRECT grammar:",
+                    audioPrompt: "Choose the sentence with correct grammar.",
+                    options: [
+                        { text: "My brother is good at playing tennis.", emoji: "🎾" },
+                        { text: "My brother is good at play tennis.", emoji: "❌" },
+                        { text: "My brother is good in play tennis.", emoji: "❌" },
+                        { text: "My brother is good on playing tennis.", emoji: "❌" }
+                    ],
+                    correctIndex: 0
+                }
+            ]
+        };
+
+        let currentStars = 0;
+        let audioEnabled = true;
+
+        // Builder State
+        let builderTaskIndex = 0;
+        let selectedBuilderBlocks = [];
+
+        // Quiz State
+        let quizQuestionIndex = 0;
+        let quizScore = 0;
+
+        function showSection(secId) {
+            playSound('click');
+            const sections = ['dashboard', 'notes', 'builder', 'quiz'];
+            sections.forEach(s => {
+                const el = document.getElementById(`sec-${s}`);
+                if (el) el.classList.add('hidden');
+            });
+            const target = document.getElementById(`sec-${secId}`);
+            if (target) target.classList.remove('hidden');
+
+            if (secId === 'notes') {
+                renderVocabCards();
+            }
+        }
+
+        function switchNotesTab(tabId) {
+            playSound('click');
+            document.querySelectorAll('.notes-content').forEach(c => c.classList.add('hidden'));
+            document.querySelectorAll('.notes-tab-btn').forEach(b => {
+                b.classList.remove('bg-amber-500', 'text-white');
+                b.classList.add('bg-slate-200', 'dark:bg-slate-700', 'text-slate-700', 'dark:text-slate-200');
+            });
+
+            const activeTab = document.getElementById(`notes-${tabId}`);
+            if (activeTab) activeTab.classList.remove('hidden');
+
+            const activeBtn = document.getElementById(`btn-${tabId}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('bg-slate-200', 'dark:bg-slate-700', 'text-slate-700', 'dark:text-slate-200');
+                activeBtn.classList.add('bg-amber-500', 'text-white');
+            }
+        }
+
+        function renderVocabCards() {
+            const grid = document.getElementById('vocab-cards-grid');
+            grid.innerHTML = SPORTS_DATA.vocabList.map((item, i) => `
+                <div class="bg-slate-50 dark:bg-slate-900 border-2 border-amber-200 dark:border-amber-800 rounded-2xl p-4 flex flex-col justify-between space-y-3 bounce-btn shadow-sm hover:shadow-md">
+                    <div class="flex items-center gap-3">
+                        <span class="text-4xl select-none">${item.emoji}</span>
+                        <div>
+                            <h4 class="font-extrabold text-base text-slate-900 dark:text-white leading-tight">${item.word}</h4>
+                            <p class="text-xs font-bold text-amber-600 dark:text-amber-400">${item.meaning}</p>
+                        </div>
+                    </div>
+                    <p class="text-xs font-semibold text-slate-500 dark:text-slate-400 italic">"${item.sentence}"</p>
+                    <button onclick="speakText('${item.word}. ${item.sentence}')" class="w-full bg-amber-400 hover:bg-amber-500 text-amber-950 font-black py-2 rounded-xl text-xs flex items-center justify-center gap-2 shadow border-b-2 border-amber-600">
+                        <i class="fa-solid fa-volume-high"></i> Listen & Practice
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function startBuilder() {
+            builderTaskIndex = 0;
+            loadBuilderTask();
+            showSection('builder');
+        }
+
+        function loadBuilderTask() {
+            const tasks = SPORTS_DATA.builderTasks;
+            const task = tasks[builderTaskIndex];
+
+            document.getElementById('builder-task-title').innerText = task.title;
+            document.getElementById('builder-task-sub').innerText = task.sub;
+
+            selectedBuilderBlocks = [];
+            renderBuilderDropzone();
+
+            const choicesContainer = document.getElementById('builder-choices');
+            choicesContainer.innerHTML = task.shuffled.map((word, idx) => `
+                <button id="b-block-${idx}" onclick="pickBuilderBlock('${word}', ${idx})" class="bg-white dark:bg-slate-700 border-3 border-slate-300 dark:border-slate-600 hover:border-emerald-400 text-slate-800 dark:text-slate-100 font-extrabold px-4 py-2.5 rounded-2xl text-sm shadow-md bounce-btn">
+                    ${word}
+                </button>
+            `).join('');
+        }
+
+        function pickBuilderBlock(word, idx) {
+            playSound('click');
+            selectedBuilderBlocks.push({ word, idx });
+            document.getElementById(`b-block-${idx}`).classList.add('opacity-30', 'pointer-events-none');
+            renderBuilderDropzone();
+        }
+
+        function renderBuilderDropzone() {
+            const dropzone = document.getElementById('builder-dropzone');
+            if (selectedBuilderBlocks.length === 0) {
+                dropzone.innerHTML = `<span class="text-xs text-emerald-400 font-bold select-none">Tap words below to place them here...</span>`;
+                return;
+            }
+
+            dropzone.innerHTML = selectedBuilderBlocks.map((item, i) => `
+                <span onclick="removeBuilderBlock(${i})" class="bg-emerald-400 text-emerald-950 font-black px-3.5 py-2 rounded-2xl text-sm shadow-md cursor-pointer flex items-center gap-2 bounce-btn">
+                    ${item.word}
+                    <i class="fa-solid fa-xmark text-xs opacity-70"></i>
+                </span>
+            `).join('');
+        }
+
+        function removeBuilderBlock(index) {
+            playSound('click');
+            const removed = selectedBuilderBlocks.splice(index, 1)[0];
+            document.getElementById(`b-block-${removed.idx}`).classList.remove('opacity-30', 'pointer-events-none');
+            renderBuilderDropzone();
+        }
+
+        function resetBuilderZone() {
+            loadBuilderTask();
+        }
+
+        function checkBuilderAnswer() {
+            const tasks = SPORTS_DATA.builderTasks;
+            const task = tasks[builderTaskIndex];
+
+            const built = selectedBuilderBlocks.map(b => b.word).join(' ');
+            const target = task.correct.join(' ');
+
+            if (built === target) {
+                playSound('correct');
+                addStars(10);
+                triggerConfetti();
+
+                builderTaskIndex++;
+                if (builderTaskIndex < tasks.length) {
+                    setTimeout(() => loadBuilderTask(), 800);
+                } else {
+                    triggerRewardModal("Well Done! 🛠️", "You successfully arranged all UASA sports sentences!", "🧩");
+                }
+            } else {
+                playSound('wrong');
+                speakText("Try again!");
+            }
+        }
+
+        function startQuiz() {
+            quizQuestionIndex = 0;
+            quizScore = 0;
+            loadQuizQuestion();
+            showSection('quiz');
+        }
+
+        function loadQuizQuestion() {
+            const questions = SPORTS_DATA.quiz20Questions;
+            const q = questions[quizQuestionIndex];
+
+            // Hide feedback
+            const feedbackBox = document.getElementById('quiz-feedback-box');
+            feedbackBox.classList.add('hidden');
+
+            document.getElementById('quiz-progress-lbl').innerText = `Question ${quizQuestionIndex + 1} of ${questions.length}`;
+            document.getElementById('quiz-score-lbl').innerText = `Score: ${quizScore} / ${questions.length * 10}`;
+
+            const pct = ((quizQuestionIndex + 1) / questions.length) * 100;
+            document.getElementById('quiz-progress-bar').style.width = `${pct}%`;
+
+            document.getElementById('quiz-question-text').innerText = q.questionText;
+
+            const grid = document.getElementById('quiz-options-grid');
+            grid.innerHTML = q.options.map((opt, i) => `
+                <button onclick="answerQuiz(${i})" class="quiz-opt-btn bg-slate-50 dark:bg-slate-700/60 hover:bg-sky-100 dark:hover:bg-sky-950/60 border-3 border-slate-200 dark:border-slate-600 rounded-2xl p-4 flex items-center gap-3 bounce-btn shadow-md text-left">
+                    <span class="text-3xl">${opt.emoji}</span>
+                    <span class="font-black text-sm text-slate-800 dark:text-slate-100">${opt.text}</span>
+                </button>
+            `).join('');
+
+            setTimeout(() => playQuizSoundPrompt(), 300);
+        }
+
+        function playQuizSoundPrompt() {
+            const q = SPORTS_DATA.quiz20Questions[quizQuestionIndex];
+            speakText(q.audioPrompt);
+        }
+
+        function answerQuiz(selectedIndex) {
+            const q = SPORTS_DATA.quiz20Questions[quizQuestionIndex];
+            const questions = SPORTS_DATA.quiz20Questions;
+            const feedbackBox = document.getElementById('quiz-feedback-box');
+
+            // Disable all buttons briefly
+            document.querySelectorAll('.quiz-opt-btn').forEach(btn => btn.classList.add('pointer-events-none'));
+
+            if (selectedIndex === q.correctIndex) {
+                playSound('correct');
+                quizScore += 10;
+                addStars(5);
+
+                feedbackBox.className = "p-4 rounded-2xl text-center font-black text-sm bg-emerald-100 border-emerald-400 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-200 block";
+                feedbackBox.innerText = "✅ Correct! Well done!";
+
+                setTimeout(() => {
+                    quizQuestionIndex++;
+                    if (quizQuestionIndex < questions.length) {
+                        loadQuizQuestion();
+                    } else {
+                        triggerRewardModal("Awesome! 🎯", `You completed all 20 UASA Sports questions! Score: ${quizScore} / 200`, "🏆");
+                    }
+                }, 1000);
+
+            } else {
+                playSound('wrong');
+                speakText("Incorrect answer. Try again!");
+
+                feedbackBox.className = "p-4 rounded-2xl text-center font-black text-sm bg-rose-100 border-rose-400 text-rose-800 dark:bg-rose-950 dark:text-rose-200 block";
+                feedbackBox.innerText = `❌ Incorrect! The correct answer is: "${q.options[q.correctIndex].text}"`;
+
+                setTimeout(() => {
+                    document.querySelectorAll('.quiz-opt-btn').forEach(btn => btn.classList.remove('pointer-events-none'));
+                }, 1200);
+            }
+        }
+
+        function addStars(num) {
+            currentStars += num;
+            document.getElementById('star-count').innerText = currentStars;
+        }
+
+        function triggerRewardModal(title, sub, badgeIcon) {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-subtitle').innerText = sub;
+            document.getElementById('reward-modal').classList.remove('hidden');
+            triggerConfetti();
+        }
+
+        function closeRewardModal() {
+            document.getElementById('reward-modal').classList.add('hidden');
+            showSection('dashboard');
+        }
+
+        function triggerConfetti() {
+            try {
+                confetti({ particleCount: 100, spread: 80, origin: { y: 0.6 } });
+            } catch (e) {}
+        }
+
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playSound(type) {
+            if (!audioEnabled) return;
+            try {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                if (type === 'click') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(480, audioCtx.currentTime);
+                    gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.06);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.06);
+                } else if (type === 'correct') {
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(523, audioCtx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(659, audioCtx.currentTime + 0.15);
+                    gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.3);
+                } else if (type === 'wrong') {
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(180, audioCtx.currentTime);
+                    gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.2);
+                }
+            } catch (e) {}
+        }
+
+        function speakText(text) {
+            if (!audioEnabled) return;
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.rate = 0.85;
+                utterance.lang = 'en-US';
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        function toggleAudio() {
+            audioEnabled = !audioEnabled;
+            const icon = document.getElementById('audio-icon');
+            icon.className = audioEnabled ? "fa-solid fa-volume-high" : "fa-solid fa-volume-xmark text-rose-500";
+        }
+
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            const icon = document.getElementById('theme-icon');
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                html.classList.add('light');
+                icon.className = "fa-solid fa-moon";
+            } else {
+                html.classList.remove('light');
+                html.classList.add('dark');
+                icon.className = "fa-solid fa-sun text-amber-400";
+            }
+        }
+
+        window.onload = function() {
+            showSection('dashboard');
+        };
+    </script>
+</body>
+</html>
